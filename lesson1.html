@@ -2,27 +2,34 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Lição 1 - Jotinha</title>
+  <meta charset="UTF-8">
+  <title>Lição 1 - Jotinha</title>
 </head>
 <body>
-<h1>Lição 1</h1>
-<p id="word">coffee</p>
-<input id="answer" placeholder="Digite a tradução">
-<button onclick="check()">Confirmar</button>
-<p id="result"></p>
-<button onclick="back()">Voltar</button>
+  <h2>Traduza a palavra:</h2>
+  <h1 id="word">coffee</h1>
 
-<script>
-const correct = "café";
-function check(){
-  const v = document.getElementById("answer").value.toLowerCase();
-  document.getElementById("result").innerText =
-    v === correct ? "Correto! +10 pontos" : "Errado, tente de novo";
-}
-function back(){
-  window.location.href = "index.html";
-}
-</script>
+  <input type="text" id="answer" placeholder="Digite a tradução">
+  <button onclick="check()">Confirmar</button>
+
+  <p id="result"></p>
+
+  <br><br>
+  <a href="index.html">
+    <button>⬅ Voltar ao início</button>
+  </a>
+
+  <script>
+    function check() {
+      const resposta = document.getElementById("answer").value.trim().toLowerCase();
+      const result = document.getElementById("result");
+
+      if (resposta === "café") {
+        result.innerHTML = "✅ Correto!";
+      } else {
+        result.innerHTML = "❌ Tente novamente.";
+      }
+    }
+  </script>
 </body>
 </html>
