@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor HTML</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Olá mundo!</h1>
+    <p>Edite este código e veja o resultado em tempo real.</p>
+</body>
+</html>let points = 0;
+let gems = 0;
+
+const lessonButtons = document.querySelectorAll(".lesson-btn");
+const lessonContainer = document.getElementById("lesson-container");
+
+// Abrir lição ao clicar
+lessonButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const lessonNumber = button.dataset.lesson;
+    openLesson(lessonNumber);
+  });
+});
+
+function openLesson(number) {
+  fetch('db.json')
+    .then(res => res.json())
+    .then(data => {
+      const lesson = data.lessons.find(l => l.id == number);
+      if (!lesson) return;
+
+      let exercisesHTML = "";
+      lesson.exercises.forEach((ex, i) => {
+        exercisesHTML += `
+          <p>${i+1}. ${ex.question}</p>
+          <input type="text" id="ex${i}">
+        `;
+      });
+
+      lessonContainer.innerHTML = `
+        <h2>${lesson.title}</h2>
+        ${exercisesHTML}
+        <button onclick="submitLesson(${number})">Concluir Lição</button>
+      `;
+      window.currentLesson = lesson;
+    });
+}
+
+function submitLesson(number) {
+  let allCorrect = true;
+  window.currentLesson.exercises.forEach((ex, i) => {
+    const val = document.getElementById(`ex${i}`).value.trim().toLowerCase();
+    if(val !== ex.answer.toLowerCase()) allCorrect = false;
+  });
+
+  if(allCorrect){
+    points += 30;
+    gems += 5;
+    alert(`Parabéns! Lição ${number} perfeita. +30 pontos e +5 gemas`);
+  } else {
+    points += 5;
+    alert(`Lição ${number} concluída. +5 pontos`);
+  }
+
+  updateDashboard();
+  lessonContainer.innerHTML = "";
+}
+
+function updateDashboard() {
+  document.getElementById("points").innerText = `Pontos: ${points}`;
+  document.getElementById("gems").innerText = `Gemas: ${gems}`;
+}
