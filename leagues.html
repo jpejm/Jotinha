@@ -1,18 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Ligas</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Ligas</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h2>Ligas</h2>
-<ul>
-<li>Iniciante</li>
-<li>Intermediário</li>
-<li>Avançado</li>
-<li>Elite</li>
+
+<h2>🏆 Sua Liga</h2>
+
+<p>Pontos totais: <strong><span id="points">0</span></strong></p>
+
+<h3 id="league">Iniciante</h3>
+
+<ul id="leagueList">
+  <li>Iniciante (0+)</li>
+  <li>Intermediário (1500+)</li>
+  <li>Avançado (2000+)</li>
+  <li>Elite (3000+)</li>
 </ul>
+
 <button onclick="location.href='index.html'">⬅ Início</button>
+
+<script>
+  let points = parseInt(localStorage.getItem('points') || 0);
+  let league = 'Iniciante';
+
+  if (points >= 3000) league = 'Elite';
+  else if (points >= 2000) league = 'Avançado';
+  else if (points >= 1500) league = 'Intermediário';
+
+  document.getElementById('points').innerText = points;
+  document.getElementById('league').innerText = league;
+</script>
+
 </body>
 </html>
