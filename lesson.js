@@ -21,9 +21,9 @@ function checkAnswer(correctAnswer) {
     points += 10;
     alert("✅ Correto! +10 pontos");
   } else {
-    points -= 3;
+    points -= 5;
     if (points < 0) points = 0;
-    alert("❌ Errado! -3 pontos");
+    alert("❌ Errado! -5 pontos");
   }
 
   localStorage.setItem("points", points);
