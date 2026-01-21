@@ -21,7 +21,7 @@ function checkAnswer(correctAnswer) {
     points += 10;
     alert("✅ Correto! +10 pontos");
   } else {
-    points -= 5;
+    points -= 3;
     if (points < 0) points = 0;
     alert("❌ Errado! -3 pontos");
   }
