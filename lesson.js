@@ -1,8 +1,43 @@
-// ===== SISTEMA DE PONTOS INTELIGENTE =====
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lição 1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 40px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
 
-let points = parseInt(localStorage.getItem("points")) || 0;
+  <h2>Lição 1</h2>
+  <p>Traduza para o inglês: <b>café</b></p>
 
-// remove acentos + corrige espaços + ignora maiúsculas
+  <input type="text" id="answer" placeholder="Digite aqui">
+  <br><br>
+  <button onclick="checkAnswer()">Confirmar</button>
+
+  <p>Pontos: <span id="points">0</span></p>
+
+  <button onclick="location.href='index.html'">⬅ Início</button>
+
+<script>
+let points = Number(localStorage.getItem("points")) || 0;
+
 function normalize(text) {
   return text
     .trim()
@@ -11,13 +46,17 @@ function normalize(text) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
-function checkAnswer(correctAnswer) {
+function checkAnswer() {
   const input = document.getElementById("answer");
+  const user = normalize(input.value);
+  const correct = normalize("café");
 
-  const userAnswer = normalize(input.value);
-  const rightAnswer = normalize(correctAnswer);
+  if (user === "") {
+    alert("Digite alguma coisa.");
+    return;
+  }
 
-  if (userAnswer === rightAnswer) {
+  if (user === correct) {
     points += 10;
     alert("✅ Correto! +10 pontos");
   } else {
@@ -27,15 +66,14 @@ function checkAnswer(correctAnswer) {
   }
 
   localStorage.setItem("points", points);
-
-  const p = document.getElementById("points");
-  if (p) p.innerText = points;
-
+  document.getElementById("points").innerText = points;
   input.value = "";
 }
 
-// mostra pontos ao carregar a página
 document.addEventListener("DOMContentLoaded", () => {
-  const p = document.getElementById("points");
-  if (p) p.innerText = points;
+  document.getElementById("points").innerText = points;
 });
+</script>
+
+</body>
+</html>
